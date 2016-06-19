@@ -21,7 +21,6 @@ module.exports = function(url, rails = true){
 
   xhr = xhrRequest(promise.resolve, promise.reject);
 
-
   return function(id){
     xhr.open('POST', url_id(id));
     // data[csrf.param] = csrf.token;
