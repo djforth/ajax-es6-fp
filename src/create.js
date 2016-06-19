@@ -16,10 +16,11 @@ module.exports = function(url, rails = true){
   promise = createPromise();
 
   xhr = xhrRequest(promise.resolve, promise.reject);
-  headers.set(xhr.get());
   xhr.open('POST', url);
+  headers.set(xhr.get());
 
   return function(data){
+    data[csrf.param] = csrf.token;
     xhr.send(data);
     return promise.promise;
   };
