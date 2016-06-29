@@ -8,6 +8,11 @@ const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
   , stubs      = require('@djforth/morse-jasmine/stub_inner')(patch);
 
 describe('patch', function(){
+  afterEach(()=>{
+    spyManager.removeAll();
+    stubs.revertAll(); // Reverts All stubs
+  });
+
   describe('patch method', function(){
     let patching, promise, prom, res, rej;
     beforeEach(function(){
@@ -63,7 +68,7 @@ describe('patch', function(){
       , ()=>[{
         token: 'some-token'
         , param: 'some-param'
-      }, 'delete']
+      }, 'patch']
       ]
       , 'headers.addRails': ()=>{
         return spyManager.getSpy('headers').addRails;
@@ -78,7 +83,7 @@ describe('patch', function(){
       , ()=>[1]
       ]
       , 'data_set': [()=>spyManager.getSpy('data_set')
-      , ()=>[{content: 'data'}]
+      , ()=>[{'content': 'data', 'some-param': 'some-token'}]
       ]
       , 'xhr.open': [()=>spyManager.getSpy('xhr').open
       , ()=>['POST', 'my/json/feed/1']

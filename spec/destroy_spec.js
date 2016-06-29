@@ -8,6 +8,10 @@ const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
   , stubs      = require('@djforth/morse-jasmine/stub_inner')(destroy);
 
 describe('destroy', function(){
+  afterEach(()=>{
+    spyManager.removeAll();
+    stubs.revertAll(); // Reverts All stubs
+  });
 
   describe('destroy method', function(){
     let kill, promise, prom, res, rej;

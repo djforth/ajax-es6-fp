@@ -1,13 +1,18 @@
 const _ = require('lodash');
 var err = require('../src/create_error');
 
-var spyManager = require('@djforth/morse-jasmine/spy_manager')()
+var spyManager = require('@djforth/morse-jasmine/spy_manager')();
 
 describe('creates error method', function() {
+  afterEach(()=>{
+    spyManager.removeAll();
+  });
+
   let spy, reject;
   beforeEach(function() {
-    spyManager.addSpy('reject');
-    reject = err(spyManager.getSpy('reject'))
+    spyManager.addSpy(['reject', 'parse']);
+    spyManager.addReturn('parse')('returnValue', 'error')
+    reject = err(spyManager.getSpy('reject'), spyManager.getSpy('parse'));
   });
 
   afterEach(function () {
@@ -19,10 +24,9 @@ describe('creates error method', function() {
   });
 
   it('should call spy and throw error', function() {
-    expect(()=>{
-      return reject('an error')
-    }).toThrow(new Error('an error'));
+    reject('an error', 404);
 
-    expect(spyManager.getSpy('reject')).toHaveBeenCalledWith('an error')
+    expect(spyManager.getSpy('reject')).toHaveBeenCalledWith('error', 404);
+    expect(spyManager.getSpy('parse')).toHaveBeenCalledWith('an error')
   });
 });

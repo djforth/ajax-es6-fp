@@ -5,6 +5,10 @@ var spyManager = require('@djforth/morse-jasmine/spy_manager')()
 
 describe('creates success function', function() {
   let spy, resolve;
+  afterEach(()=>{
+    spyManager.removeAll();
+  });
+
   beforeEach(function() {
     spyManager.addSpy(['resolve', 'parse']);
     spyManager.addReturn('parse')('returnValue', 'parsed data');

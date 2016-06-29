@@ -8,6 +8,11 @@ const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
 
 describe('fetch', function(){
   let promise, prom, res, rej;
+  afterEach(()=>{
+    spyManager.removeAll();
+    stubs.revertAll(); // Reverts All stubs
+  });
+
   beforeEach(function(){
     stubs.addSpy(['xhrRequest', 'createPromise']);
     spyManager.addSpy([

@@ -34,11 +34,11 @@ module.exports = function(resolve, reject){
   let err, stateChange, suc;
   const xhr = new XMLHttpRequest();
 
-  err = errorFn(reject);
+  err = errorFn(reject, parseData);
   suc = successFn(resolve, parseData);
   stateChange = readyState(suc, err, checkStatus);
 
-  addError(xhr, errorFn(reject));
+  addError(xhr, err);
   addReadyState(xhr, stateChange);
 
   var obj = {

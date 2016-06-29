@@ -1,5 +1,6 @@
 
 var create = require('../src/create');
+var _ = require('lodash');
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
 const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
@@ -8,6 +9,11 @@ const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
 
 describe('create', function(){
   let creator, promise, prom, res, rej;
+  afterEach(()=>{
+    spyManager.removeAll();
+    stubs.revertAll(); // Reverts All stubs
+  });
+
   beforeEach(function(){
     stubs.addSpy(['xhrRequest', 'addHeaders', 'createPromise', 'getCSRF']);
     spyManager.addSpy([
@@ -38,11 +44,11 @@ describe('create', function(){
     });
 
     creator = create('my/json/feed');
-    promise = creator('some data');
+    promise = creator({title: 'foo'});
   });
 
   let fn_calls = {
-    'getCSRF':()=>stubs.getSpy('getCSRF')
+    'getCSRF': ()=>stubs.getSpy('getCSRF')
     , 'addHeaders': ()=>stubs.getSpy('addHeaders')
     , 'headers.addCSRF': ()=>{
       return spyManager.getSpy('headers').addCSRF;
@@ -59,14 +65,23 @@ describe('create', function(){
     , 'xhr.open': [()=>spyManager.getSpy('xhr').open
     , ()=>['POST', 'my/json/feed']
     ]
-    , 'xhr.send': [()=>spyManager.getSpy('xhr').send
-    , ()=>['some data']]
   };
   checkMulti(fn_calls);
+
+  it('should return a function', function() {
+    expect(_.isFunction(creator)).toBeTruthy();
+  });
 
   it('should success if promise resolved', function(done){
     promise.then(function(data){
       expect(data).toEqual('success');
+      let send = spyManager.getSpy('xhr').send;
+      expect(send).toHaveBeenCalled();
+
+      let calls = send.calls.argsFor(0)[0];
+      expect(calls.title).toEqual('foo');
+      expect(_.has(calls, 'some-param')).toBeTruthy();
+      expect(calls['some-param']).toEqual('some-token');
     });
 
     res('success');

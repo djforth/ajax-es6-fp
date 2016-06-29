@@ -1,4 +1,4 @@
-const xhrRequest = require('./set_request')
+var xhrRequest = require('./set_request')
     , addHeaders = require('./manage_headers')
     , getCSRF = require('./get_CSRF')
     , createPromise = require('./create_promise');

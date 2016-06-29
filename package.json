@@ -57,7 +57,7 @@
   },
   "homepage": "https://github.com/djforth/ajax-es6-fp#readme",
   "devDependencies": {
-    "@djforth/ap_karma": "~1.2.4",
+    "@djforth/ap_karma": "~1.2.6",
     "@djforth/ap_utils": "^2.1.1",
     "@djforth/morse-jasmine": "^1.0.17",
     "babel": "^6.5.2",
