@@ -86,7 +86,7 @@ describe('destroy', function(){
         return spyManager.getSpy('data_set');
       }
       , 'xhr.open': [()=>spyManager.getSpy('xhr').open
-      , ()=>['POST', 'my/json/feed/1']
+      , ()=>['DELETE', 'my/json/feed/1']
       ]
       , 'xhr.send': [()=>spyManager.getSpy('xhr').send
       , ()=>['some data']]

@@ -86,7 +86,7 @@ describe('patch', function(){
       , ()=>[{'content': 'data', 'some-param': 'some-token'}]
       ]
       , 'xhr.open': [()=>spyManager.getSpy('xhr').open
-      , ()=>['POST', 'my/json/feed/1']
+      , ()=>['PUT', 'my/json/feed/1']
       ]
       , 'xhr.send': [()=>spyManager.getSpy('xhr').send
       , ()=>['some data']]
