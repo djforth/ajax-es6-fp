@@ -1,7 +1,7 @@
 const _ = require('lodash/core');
 _.includes = require('lodash/includes');
 
-let success_status = [200, 201];
+let success_status = [200, 201, 204];
 let error_status = [404, 500];
 
 module.exports = function(status, readyState){
