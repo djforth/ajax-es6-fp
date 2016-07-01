@@ -22,7 +22,8 @@ module.exports = function(url, rails = true){
   xhr = xhrRequest(promise.resolve, promise.reject);
 
   return function(id){
-    xhr.open('DELETE', url_id(id));
+    let api = (id) ? url_id(id) : url;
+    xhr.open('DELETE', api);
     // data[csrf.param] = csrf.token;
     headers.set(xhr.get());
     xhr.send(data_set());
