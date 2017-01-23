@@ -1,0 +1,8 @@
+{
+
+  "karma": {
+    "frameworks": ["sinon"],
+    "input": "./spec/test_bundle.js",
+    "plugins": ["karma-sinon"]
+  }
+}

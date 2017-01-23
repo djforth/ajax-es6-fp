@@ -2,9 +2,9 @@
 var fetch = require('../src/fetch');
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
-  , spyManager = require('@djforth/morse-jasmine/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine/stub_inner')(fetch);
+const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
+  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
+  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(fetch);
 
 describe('fetch', function(){
   let promise, prom, res, rej;

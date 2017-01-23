@@ -1,7 +1,7 @@
 
 const _ = require('lodash');
 var ready_state = require('../src/ready_state');
-var spyManager = require('@djforth/morse-jasmine/spy_manager')();
+var spyManager = require('@djforth/morse-jasmine-wp/spy_manager')();
 
 describe('readyState', function(){
   let readyState, status, xhr;
@@ -9,7 +9,7 @@ describe('readyState', function(){
     spyManager.removeAll();
   });
 
-  beforeEach(function() {
+  beforeEach(function(){
     xhr = {
       status: 200
       , readyState: 4
@@ -26,7 +26,7 @@ describe('readyState', function(){
     );
   });
 
-  afterEach(function () {
+  afterEach(function(){
     spyManager.removeAll();
   });
 
@@ -35,15 +35,15 @@ describe('readyState', function(){
     readyState(xhr);
     expect(spyManager.getSpy('suc')).not.toHaveBeenCalled();
     expect(spyManager.getSpy('err')).not.toHaveBeenCalled();
-    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4)
+    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4);
   });
 
-   it('should call error with status of -1', function(){
+  it('should call error with status of -1', function(){
     status = -1;
     readyState(xhr);
     expect(spyManager.getSpy('suc')).not.toHaveBeenCalled();
     expect(spyManager.getSpy('err')).toHaveBeenCalledWith('a response', 404);
-    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4)
+    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4);
   });
 
   it('should call success with status of 1', function(){
@@ -51,7 +51,6 @@ describe('readyState', function(){
     readyState(xhr);
     expect(spyManager.getSpy('suc')).toHaveBeenCalledWith('a response');
     expect(spyManager.getSpy('err')).not.toHaveBeenCalled();
-    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4)
-
+    expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4);
   });
 });

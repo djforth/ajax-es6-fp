@@ -33,7 +33,6 @@ function addReadyState(xhr, stateChange){
 module.exports = function(resolve, reject){
   let err, stateChange, suc;
   const xhr = new XMLHttpRequest();
-
   err = errorFn(reject, parseData);
   suc = successFn(resolve, parseData);
   stateChange = readyState(suc, err, checkStatus);

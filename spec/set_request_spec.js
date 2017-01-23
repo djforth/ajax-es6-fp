@@ -1,16 +1,14 @@
 const _ = require('lodash');
-// require('jasmine-ajax');
-const sinon = require('sinon');
 
 var set_request = require('../src/set_request');
 
 /* Globals jasmine*/
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
-  , getMod     = require('@djforth/morse-jasmine/get_module')(set_request)
-  , spyManager = require('@djforth/morse-jasmine/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine/stub_inner')(set_request);
+const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
+  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(set_request)
+  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
+  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(set_request);
 
 function createDummyListener(event){
   return function(xhr, handler){
@@ -133,11 +131,11 @@ describe('set_request', function(){
   });
 
   describe('create a XHR', function(){
-    let xhr, addError, addReadyState, xhr_request, requests;
+    let xhr, xhr_request, requests;
     beforeEach(function(){
       xhr_request = sinon.useFakeXMLHttpRequest();
       requests = [];
-      xhr_request.onCreate = function (xhr){
+      xhr_request.onCreate = function(xhr){
         requests.push(xhr);
       };
 
@@ -179,29 +177,29 @@ describe('set_request', function(){
       ]
      , successFn: [()=>stubs.getSpy('successFn')
       , ()=>[spyManager.getSpy('resolve'), stubs.getSpy('parseData')]
-      ]
+     ]
       , readyState: [()=>stubs.getSpy('readyState')
       , ()=>[spyManager.getSpy('suc'), spyManager.getSpy('err'), stubs.getSpy('checkStatus')]
       ]
     };
     checkMulti(calls);
 
-    it('should set error', function() {
+    it('should set error', function(){
       let error = stubs.getSpy('addError');
       expect(error).toHaveBeenCalled();
       let args = error.calls.argsFor(0);
       expect(args[1]).toEqual(spyManager.getSpy('err'));
     });
 
-    it('should set readyState', function() {
+    it('should set readyState', function(){
       let readState = stubs.getSpy('addReadyState');
       expect(readState).toHaveBeenCalled();
       let args = readState.calls.argsFor(0);
       expect(args[1]).toEqual(spyManager.getSpy('stateChange'));
     });
 
-    describe('check request', function() {
-      beforeEach(function() {
+    describe('check request', function(){
+      beforeEach(function(){
         xhr.open('GET', '/some/json');
         xhr.send();
       });
@@ -210,16 +208,7 @@ describe('set_request', function(){
         expect(requests[0].url).toBe('/some/json');
       });
 
-      it('should error if 500 returned', function() {
-        requests[0].respond(500, {
-          contentType: 'application/json'
-          , responseText: 'An Error'
-        });
-
-        expect(spyManager.getSpy('err')).toHaveBeenCalled();
-      });
-
-      it('should onstatechange if 200 returned', function() {
+      it('should onstatechange if 200 returned', function(){
         requests[0].respond(200, {
           contentType: 'application/json'
           , responseText: 'Success'
@@ -228,9 +217,20 @@ describe('set_request', function(){
         expect(spyManager.getSpy('stateChange')).toHaveBeenCalled();
       });
 
-      describe('progress', function() {
+      xit('should error if 500 returned', function(){
+        requests[0].respond(500, {
+          contentType: 'application/json'
+          , responseText: 'An Error'
+        });
 
+        expect(spyManager.getSpy('reject')).toHaveBeenCalled();
       });
+
+
+
+      // describe('progress', function(){
+
+      // });
     });
   });
 });

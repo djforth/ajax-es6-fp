@@ -3,9 +3,9 @@ var create = require('../src/create');
 var _ = require('lodash');
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
-  , spyManager = require('@djforth/morse-jasmine/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine/stub_inner')(create);
+const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
+  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
+  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(create);
 
 describe('create', function(){
   let creator, promise, prom, res, rej;
@@ -68,7 +68,7 @@ describe('create', function(){
   };
   checkMulti(fn_calls);
 
-  it('should return a function', function() {
+  it('should return a function', function(){
     expect(_.isFunction(creator)).toBeTruthy();
   });
 

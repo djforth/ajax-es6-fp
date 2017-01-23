@@ -2,10 +2,10 @@ var _ = require('lodash');
 var destroy = require('../src/destroy');
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine/check_multiple_calls')
-  , getMod     = require('@djforth/morse-jasmine/get_module')(destroy)
-  , spyManager = require('@djforth/morse-jasmine/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine/stub_inner')(destroy);
+const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
+  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(destroy)
+  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
+  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(destroy);
 
 describe('destroy', function(){
   afterEach(()=>{
