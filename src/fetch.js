@@ -3,7 +3,7 @@ const xhrRequest = require('./set_request')
     , createPromise = require('./create_promise');
 
 module.exports = function(url){
-  var promise, xhr;
+  let promise, xhr;
 
   promise = createPromise();
 

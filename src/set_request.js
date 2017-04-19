@@ -40,7 +40,7 @@ module.exports = function(resolve, reject){
   addError(xhr, err);
   addReadyState(xhr, stateChange);
 
-  var obj = {
+  const obj = {
     progress: function(prog){
       if (!_.isFunction(prog)) return obj;
       addProgress(xhr, prog);

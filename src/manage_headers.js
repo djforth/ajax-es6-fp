@@ -14,7 +14,7 @@ function addHeaders(headers, token){
 module.exports = function(){
   let headers = [];
 
-  var obj = {
+  const obj = {
     add: function(token){
       headers = addHeaders(headers, token);
       return obj;

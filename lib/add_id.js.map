@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/add_id.js"],"names":["module","exports","add_id","url","id"],"mappings":";;AAAAA,OAAOC,OAAP,GAAiB,SAASC,MAAT,CAAgBC,GAAhB,EAAoB;AACnC,SAAO,UAASC,EAAT,EAAY;AACjB,WAAUD,GAAV,SAAiBC,EAAjB;AACD,GAFD;AAGD,CAJD","file":"add_id.js","sourcesContent":["module.exports = function add_id(url){\n  return function(id){\n    return `${url}/${id}`;\n  };\n};\n"]}

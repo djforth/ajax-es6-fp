@@ -6,7 +6,7 @@ const add_id = require('./add_id')
     , xhrRequest = require('./set_request');
 
 module.exports = function(url, rails = true){
-  var csrf, data_set, headers, promise, xhr, url_id;
+  let csrf, data_set, headers, promise, xhr, url_id;
   csrf = getCSRF();
   headers = addHeaders();
 

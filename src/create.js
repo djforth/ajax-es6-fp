@@ -1,10 +1,10 @@
-var xhrRequest = require('./set_request')
+let xhrRequest = require('./set_request')
     , addHeaders = require('./manage_headers')
     , getCSRF = require('./get_CSRF')
     , createPromise = require('./create_promise');
 
 module.exports = function(url, rails = true){
-  var promise, xhr, headers, csrf;
+  let promise, xhr, headers, csrf;
   csrf = getCSRF();
   headers = addHeaders();
   headers.addCSRF(csrf.token);
