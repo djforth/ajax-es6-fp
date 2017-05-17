@@ -1,9 +1,9 @@
-const _  = require('lodash/core');
-_.reject = require('lodash/reject');
+import {clone, isArray, reject} from 'lodash';
+// _.reject = require('lodash/reject');
 
 function addHeaders(headers, token){
-  headers = _.clone(headers);
-  if (_.isArray(token)){
+  headers = clone(headers);
+  if (isArray(token)){
     headers = headers.concat(token);
   } else {
     headers.push(token);
@@ -11,7 +11,7 @@ function addHeaders(headers, token){
   return headers;
 }
 
-module.exports = function(){
+export default function(){
   let headers = [];
 
   const obj = {
@@ -43,12 +43,12 @@ module.exports = function(){
       headers = [];
     }
     , remove: function(header){
-      headers = _.reject(headers, (h)=>{
+      headers = reject(headers, (h)=>{
         return h.header === header;
       });
     }
     , set: function(xhr){
-      _.forEach(headers, function(h){
+      headers.forEach(function(h){
         xhr.setRequestHeader(h.header, h.value);
       });
     }

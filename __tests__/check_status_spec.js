@@ -1,6 +1,4 @@
-const _ = require('lodash');
-
-var check = require('../src/check_status');
+ import check from '../src/check_status';
 
 describe('checkStatus', function(){
   it('should return 0 if not in error on completed state', function(){

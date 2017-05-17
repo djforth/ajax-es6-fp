@@ -1,7 +1,8 @@
-const _ = require('lodash');
-var err = require('../src/create_error');
+import _ from 'lodash';
+import err from '../src/create_error';
 
-var spyManager = require('@djforth/morse-jasmine-wp/spy_manager')();
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
 
 describe('creates error method', function(){
   afterEach(()=>{
@@ -24,9 +25,9 @@ describe('creates error method', function(){
   });
 
   it('should call spy and throw error', function(){
-    reject('an error', 404);
+    reject('error', 'can\'t be found', 404);
 
-    expect(spyManager.getSpy('reject')).toHaveBeenCalledWith('error', 404);
-    expect(spyManager.getSpy('parse')).toHaveBeenCalledWith('an error');
+    expect(spyManager.getSpy('reject')).toHaveBeenCalledWith({error: 'error', status: 'can\'t be found', statusCode: 404});
+    expect(spyManager.getSpy('parse')).toHaveBeenCalledWith('error');
   });
 });

@@ -1,7 +1,6 @@
-
-const _ = require('lodash');
-var ready_state = require('../src/ready_state');
-var spyManager = require('@djforth/morse-jasmine-wp/spy_manager')();
+import ready_state from '../src/ready_state';
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
 
 describe('readyState', function(){
   let readyState, status, xhr;
@@ -42,7 +41,7 @@ describe('readyState', function(){
     status = -1;
     readyState(xhr);
     expect(spyManager.getSpy('suc')).not.toHaveBeenCalled();
-    expect(spyManager.getSpy('err')).toHaveBeenCalledWith('a response', 404);
+    expect(spyManager.getSpy('err')).toHaveBeenCalledWith('a response', 404, 200);
     expect(spyManager.getSpy('status')).toHaveBeenCalledWith(200, 4);
   });
 

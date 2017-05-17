@@ -1,12 +1,12 @@
-const _ = require('lodash/core');
+import {isFunction} from 'lodash';
 
 function getPercent(loaded, total, computable){
   if (!computable) return 100;
   return ((loaded / total) * 100);
 }
 
-module.exports = function(progress){
-  if (!_.isFunction(progress)) return;
+export default function(progress){
+  if (!isFunction(progress)) return;
 
   return function(loaded, total, lengthComputable){
     progress({

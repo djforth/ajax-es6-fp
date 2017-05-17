@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var add_method = require('../src/add_method');
+ import _ from 'lodash';
+ import add_method from '../src/add_method';
 
 describe('add_method', function(){
   let method;

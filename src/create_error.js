@@ -1,5 +1,5 @@
 
-module.exports = function(reject, parse){
+export default function(reject, parse){
   return function(err, status, statusCode){
     reject({
       error: parse(err)

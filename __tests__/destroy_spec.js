@@ -1,20 +1,23 @@
-var _ = require('lodash');
-var patch = require('../src/patch');
+ import _ from 'lodash';
+ import destroy from '../src/destroy';
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
-  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(patch)
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(patch);
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
+import GetMod from '@djforth/morse-jasmine-wp/get_module';
+const getMod = GetMod(destroy)
+  import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(destroy);
 
-describe('patch', function(){
+describe('destroy', function(){
   afterEach(()=>{
     spyManager.removeAll();
     stubs.revertAll(); // Reverts All stubs
   });
 
-  describe('patch method', function(){
-    let patching, promise, prom, res, rej;
+  describe('destroy method', function(){
+    let kill, promise, prom, res, rej;
     beforeEach(function(){
       stubs.addSpy(['add_id', 'xhrRequest', 'addHeaders', 'createPromise', 'getCSRF', 'addMethod']);
 
@@ -52,8 +55,8 @@ describe('patch', function(){
         , resolve: res
       });
 
-      patching = patch('my/json/feed');
-      promise = patching({content: 'data'}, 1);
+      kill = destroy('my/json/feed');
+      promise = kill(1);
     });
 
     let fn_calls = {
@@ -68,7 +71,7 @@ describe('patch', function(){
       , ()=>[{
         token: 'some-token'
         , param: 'some-param'
-      }, 'patch']
+      }, 'delete']
       ]
       , 'headers.addRails': ()=>{
         return spyManager.getSpy('headers').addRails;
@@ -82,11 +85,11 @@ describe('patch', function(){
       , 'url_id': [()=>spyManager.getSpy('url_id')
       , ()=>[1]
       ]
-      , 'data_set': [()=>spyManager.getSpy('data_set')
-      , ()=>[{'content': 'data', 'some-param': 'some-token'}]
-      ]
+      , 'data_set': ()=>{
+        return spyManager.getSpy('data_set');
+      }
       , 'xhr.open': [()=>spyManager.getSpy('xhr').open
-      , ()=>['PUT', 'my/json/feed/1']
+      , ()=>['DELETE', 'my/json/feed/1']
       ]
       , 'xhr.send': [()=>spyManager.getSpy('xhr').send
       , ()=>['some data']]

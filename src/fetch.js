@@ -1,8 +1,8 @@
 
-const xhrRequest = require('./set_request')
-    , createPromise = require('./create_promise');
+import xhrRequest from './set_request';
+import createPromise from './create_promise';
 
-module.exports = function(url){
+export default function(url){
   let promise, xhr;
 
   promise = createPromise();

@@ -1,5 +1,5 @@
 /* eslint-disable default-case*/
-module.exports = function(suc, err, status){
+export default function(suc, err, status){
   return function(xhr){
     switch (status(xhr.status, xhr.readyState)){
       case -1:

@@ -1,20 +1,20 @@
-var _ = require('lodash');
-var destroy = require('../src/destroy');
+import patch from '../src/patch';
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
-  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(destroy)
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(destroy);
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(patch);
 
-describe('destroy', function(){
+describe('patch', function(){
   afterEach(()=>{
     spyManager.removeAll();
     stubs.revertAll(); // Reverts All stubs
   });
 
-  describe('destroy method', function(){
-    let kill, promise, prom, res, rej;
+  describe('patch method', function(){
+    let patching, promise, prom, res, rej;
     beforeEach(function(){
       stubs.addSpy(['add_id', 'xhrRequest', 'addHeaders', 'createPromise', 'getCSRF', 'addMethod']);
 
@@ -52,8 +52,8 @@ describe('destroy', function(){
         , resolve: res
       });
 
-      kill = destroy('my/json/feed');
-      promise = kill(1);
+      patching = patch('my/json/feed');
+      promise = patching({content: 'data'}, 1);
     });
 
     let fn_calls = {
@@ -68,7 +68,7 @@ describe('destroy', function(){
       , ()=>[{
         token: 'some-token'
         , param: 'some-param'
-      }, 'delete']
+      }, 'patch']
       ]
       , 'headers.addRails': ()=>{
         return spyManager.getSpy('headers').addRails;
@@ -82,11 +82,11 @@ describe('destroy', function(){
       , 'url_id': [()=>spyManager.getSpy('url_id')
       , ()=>[1]
       ]
-      , 'data_set': ()=>{
-        return spyManager.getSpy('data_set');
-      }
+      , 'data_set': [()=>spyManager.getSpy('data_set')
+      , ()=>[{'content': 'data', 'some-param': 'some-token'}]
+      ]
       , 'xhr.open': [()=>spyManager.getSpy('xhr').open
-      , ()=>['DELETE', 'my/json/feed/1']
+      , ()=>['PUT', 'my/json/feed/1']
       ]
       , 'xhr.send': [()=>spyManager.getSpy('xhr').send
       , ()=>['some data']]

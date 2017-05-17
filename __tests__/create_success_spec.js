@@ -1,7 +1,8 @@
-const _ = require('lodash');
-var suc = require('../src/create_success');
-var spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls');
+import _ from 'lodash';
+import suc from '../src/create_success';
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
 
 describe('creates success function', function(){
   let spy, resolve;

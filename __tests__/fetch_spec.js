@@ -1,10 +1,12 @@
 
-var fetch = require('../src/fetch');
+ import fetch from '../src/fetch';
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(fetch);
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(fetch);
 
 describe('fetch', function(){
   let promise, prom, res, rej;

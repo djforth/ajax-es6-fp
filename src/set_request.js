@@ -1,11 +1,11 @@
-const _ = require('lodash/core');
+import {isFunction} from 'lodash';
 
-const checkStatus = require('./check_status')
-     , errorFn    = require('./create_error')
-     , parseData  = require('./parse')
-     , progressFn   = require('./set_progress')
-     , successFn  = require('./create_success')
-     , readyState = require('./ready_state');
+import checkStatus from './check_status';
+import errorFn from './create_error';
+import parseData from './parse';
+import progressFn from './set_progress';
+import successFn from './create_success';
+import readyState from './ready_state';
 
 function addError(xhr, err){
   xhr.addEventListener('error', function(evt){
@@ -30,7 +30,7 @@ function addReadyState(xhr, stateChange){
   });
 }
 
-module.exports = function(resolve, reject){
+export default function(resolve, reject){
   let err, stateChange, suc;
   const xhr = new XMLHttpRequest();
   err = errorFn(reject, parseData);
@@ -42,7 +42,7 @@ module.exports = function(resolve, reject){
 
   const obj = {
     progress: function(prog){
-      if (!_.isFunction(prog)) return obj;
+      if (!isFunction(prog)) return obj;
       addProgress(xhr, prog);
       return obj;
     }

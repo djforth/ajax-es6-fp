@@ -1,11 +1,9 @@
-const _ = require('lodash');
+ import _ from 'lodash';
 
-var set_progress = require('../src/set_progress');
+ import set_progress from '../src/set_progress';
 
-const checkCalls = require('@djforth/morse-jasmine-wp/check_calls')
-  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(set_progress)
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(set_progress);
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
 
 describe('set_progress', function(){
   let prog, spy;

@@ -1,7 +1,7 @@
-const _ = require('lodash/core');
+import {isUndefined} from 'lodash';
 
-module.exports = function(data){
-  if (_.isUndefined(data)) return;
+export default function(data){
+  if (isUndefined(data)) return;
   let newdata;
   try {
     newdata = JSON.parse(data);

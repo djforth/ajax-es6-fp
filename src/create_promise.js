@@ -1,4 +1,4 @@
-module.exports = function(){
+export default function(){
   let promise, res, rej;
   promise = new Promise(function(resolve, reject){
     res = resolve;

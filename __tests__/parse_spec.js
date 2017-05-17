@@ -1,4 +1,4 @@
-const parse = require('../src/parse');
+import parse from '../src/parse';
 
 describe('parseData', function(){
   let data, json;

@@ -1,14 +1,17 @@
-const _ = require('lodash');
+ import _ from 'lodash';
 
-var set_request = require('../src/set_request');
+ import set_request from '../src/set_request';
 
 /* Globals jasmine*/
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
-  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(set_request)
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(set_request);
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
+import GetMod from '@djforth/morse-jasmine-wp/get_module';
+const getMod = GetMod(set_request);
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(set_request);
 
 function createDummyListener(event){
   return function(xhr, handler){

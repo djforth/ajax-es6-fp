@@ -1,11 +1,13 @@
 
-var create = require('../src/create');
-var _ = require('lodash');
+ import create from '../src/create';
+ import _ from 'lodash';
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
-const checkMulti = require('@djforth/morse-jasmine-wp/check_multiple_calls')
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(create);
+import checkMulti from '@djforth/morse-jasmine-wp/check_multiple_calls';
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(create);
 
 describe('create', function(){
   let creator, promise, prom, res, rej;

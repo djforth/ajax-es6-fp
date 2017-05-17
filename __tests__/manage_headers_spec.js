@@ -1,11 +1,13 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
-var manage_headers = require('../src/manage_headers');
+import manage_headers from '../src/manage_headers';
 
-const checkCalls = require('@djforth/morse-jasmine-wp/check_calls')
-  , getMod     = require('@djforth/morse-jasmine-wp/get_module')(manage_headers)
-  , spyManager = require('@djforth/morse-jasmine-wp/spy_manager')()
-  , stubs      = require('@djforth/morse-jasmine-wp/stub_inner')(manage_headers);
+import GetMod from '@djforth/morse-jasmine-wp/get_module';
+const getMod = GetMod(manage_headers)
+import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
+const spyManager = SpyManager();
+import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
+const stubs = Stubs(manage_headers);
 
 describe('manage headers', function(){
   describe('addHeaders', function(){

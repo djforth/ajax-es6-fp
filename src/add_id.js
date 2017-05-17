@@ -1,5 +1,6 @@
-module.exports = function add_id(url){
-  return function(id){
+export default (url)=>{
+  return (id)=>{
     return `${url}/${id}`;
   };
 };
+

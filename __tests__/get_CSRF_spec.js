@@ -1,8 +1,6 @@
-var _ = require('lodash');
+import {create as createEl} from'@djforth/morse-jasmine-wp/create_elements';
 
-const createEl = require('@djforth/morse-jasmine-wp/create_elements').create;
-
-var getCSRF = require('../src/get_CSRF');
+import getCSRF from '../src/get_CSRF';
 
 describe('getCSRF', function(){
   let token, param, csrf;

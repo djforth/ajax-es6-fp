@@ -1,11 +1,11 @@
-const add_id = require('./add_id')
-    , addMethod = require('./add_method')
-    , addHeaders = require('./manage_headers')
-    , getCSRF = require('./get_CSRF')
-    , createPromise = require('./create_promise')
-    , xhrRequest = require('./set_request');
+import add_id from './add_id';
+import addMethod from './add_method';
+import addHeaders from './manage_headers';
+import getCSRF from './get_CSRF';
+import createPromise from './create_promise';
+import xhrRequest from './set_request';
 
-module.exports = function(url, rails = true){
+export default function(url, rails = true){
   let csrf, data_set, headers, promise, xhr, url_id;
   csrf = getCSRF();
   headers = addHeaders();

@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var add_id = require('../src/add_id');
+import _ from 'lodash';
+import add_id from '../src/add_id';
 
 /* eslint-disable no-mixed-requires, max-nested-callbacks, max-len  */
 

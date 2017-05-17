@@ -1,9 +1,9 @@
-let xhrRequest = require('./set_request')
-    , addHeaders = require('./manage_headers')
-    , getCSRF = require('./get_CSRF')
-    , createPromise = require('./create_promise');
+import xhrRequest from './set_request';
+import addHeaders from './manage_headers';
+import getCSRF from './get_CSRF';
+import createPromise from './create_promise';
 
-module.exports = function(url, rails = true){
+export default function(url, rails = true){
   let promise, xhr, headers, csrf;
   csrf = getCSRF();
   headers = addHeaders();
