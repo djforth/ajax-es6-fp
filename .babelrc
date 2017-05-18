@@ -1,25 +1,29 @@
 {
-  "plugins": [
-    "add-module-exports",
-    "lodash"
-  ],
   "presets": [
     ["es2015", {"modules": false}],
     "es2016",
-    "es2017",
-    ["env", {
-      modules: 'umd',
-      "targets": {
-          'node': 4,
-          "browsers": [
-            "last 2 versions",
-            "chrome >= 55",
-            "IE >= 11"
-          ]
-        }
-    }]
+    "es2017"
   ],
   "env": {
+    "production": {
+      "plugins": [
+        "lodash"
+      ]
+      , "presets": [
+        ["env", {
+          modules: 'umd',
+          "targets": {
+              'node': 4,
+              "browsers": [
+                "last 2 versions",
+                "chrome >= 55",
+                "IE >= 11"
+              ]
+            }
+        }]
+        , 'babili'
+      ]
+    },
     "test": {
       "plugins": [
 
