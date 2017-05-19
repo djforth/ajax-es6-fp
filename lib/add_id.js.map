@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/add_id.js"],"names":["url","id"],"mappings":"AAAA,gBAAe,UAACA,GAAD,EAAO;AACpB,SAAO,UAACC,EAAD,EAAM;AACX,WAAUD,GAAV,SAAiBC,EAAjB;AACD,GAFD;AAGD,CAJD","file":"add_id.js","sourcesContent":["export default (url)=>{\n  return (id)=>{\n    return `${url}/${id}`;\n  };\n};\n\n"]}
