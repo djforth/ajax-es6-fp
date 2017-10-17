@@ -1,3 +1,3 @@
-spec
-karma.conf.js
-npm-shrinkwrap.json
+__tests__/
+__markup__/
+src
