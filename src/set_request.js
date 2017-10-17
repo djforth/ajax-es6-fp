@@ -25,6 +25,7 @@ function addProgress(xhr, prog){
 }
 
 function addReadyState(xhr, stateChange){
+  // console.log()
   xhr.addEventListener('readystatechange', function(){
     stateChange(xhr);
   });
@@ -36,7 +37,6 @@ export default function(resolve, reject){
   err = errorFn(reject, parseData);
   suc = successFn(resolve, parseData);
   stateChange = readyState(suc, err, checkStatus);
-
   addError(xhr, err);
   addReadyState(xhr, stateChange);
 

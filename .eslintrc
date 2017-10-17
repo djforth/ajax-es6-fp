@@ -1,14 +1,5 @@
 {
-  "extends": "morsedigital",
-  "globals": {
-    "fdescribe": true,
-    "describe": false,
-    "beforeEach": false,
-    "afterEach": false,
-    "it": true,
-    "expect": true,
-    "spyOn": true
-  },
+  "extends": "morsedigital-jest",
   "rules": {
     "require-jsdoc": 0
   }

@@ -2,18 +2,19 @@ import _ from 'lodash';
 
 import manage_headers from '../src/manage_headers';
 
-import GetMod from '@djforth/morse-jasmine-wp/get_module';
-const getMod = GetMod(manage_headers)
-import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
-const spyManager = SpyManager();
-import Stubs from '@djforth/morse-jasmine-wp/stub_inner';
-const stubs = Stubs(manage_headers);
+import SpyManager from '@djforth/stubs-spy-manager-jest';
+import CallHelper from '@djforth/jest-call-helpers';
 
 describe('manage headers', function(){
+  const stubsSpies = SpyManager(manage_headers);
+  const callHelper = CallHelper(stubsSpies);
+  afterEach(()=>{
+    stubsSpies.reset();
+  });
   describe('addHeaders', function(){
     let addHeaders;
     beforeEach(function(){
-      addHeaders = getMod('addHeaders');
+      addHeaders = stubsSpies.getFn('addHeaders');
     });
 
     it('should add to array', function(){
@@ -34,23 +35,19 @@ describe('manage headers', function(){
   describe('methods', function(){
     let headers;
     beforeEach(function(){
-      stubs.addSpy('addHeaders');
-
-      stubs.getSpy('addHeaders').and.callFake((array, token)=>{
-        if (_.isArray(token)){
-          array = array.concat(token);
-        } else {
-          array.push(token);
+      stubsSpies.add([{
+        stub: 'addHeaders'
+        , callback: (array, token)=>{
+          if (_.isArray(token)){
+            array = array.concat(token);
+          } else {
+            array.push(token);
+          }
+          return array;
         }
-        return array;
-      });
-
+      }]);
+      stubsSpies.make();
       headers = manage_headers();
-    });
-
-    afterEach(function(){
-      stubs.revertAll();
-      spyManager.removeAll();
     });
 
     it('should return object of methods', function(){
@@ -59,45 +56,49 @@ describe('manage headers', function(){
 
     it('should add to Headers', function(){
       headers.add('h1');
-      expect(stubs.getSpy('addHeaders')).toHaveBeenCalled();
+      expect(stubsSpies.get('addHeaders')).toHaveBeenCalled();
       expect(headers.all()).toEqual(['h1']);
     });
 
     it('should add delete headers', function(){
       headers.addDelete();
-      expect(stubs.getSpy('addHeaders')).toHaveBeenCalled();
-      expect(headers.all()).toContain({header: 'X-Http-Method-Override', value: 'delete'});
+      expect(stubsSpies.get('addHeaders')).toHaveBeenCalled();
+      expect(headers.all()).toEqual([{header: 'X-Http-Method-Override', value: 'delete'}]);
     });
 
     it('should add CSRF headers', function(){
       headers.addCSRF('token');
-      expect(stubs.getSpy('addHeaders')).toHaveBeenCalled();
-      expect(headers.all()).toContain({header: 'X-CSRF-Token', value: 'token'});
+      expect(stubsSpies.get('addHeaders')).toHaveBeenCalled();
+      expect(headers.all()).toEqual([{header: 'X-CSRF-Token', value: 'token'}]);
     });
 
     it('should add Rails headers', function(){
       headers.addRails();
-      expect(stubs.getSpy('addHeaders')).toHaveBeenCalled();
-      expect(headers.all()).toContain({header: 'Content-type', value: 'application/json'});
-      expect(headers.all()).toContain({header: 'accept', value: '*/*;q=0.5, text/javascript, application/javascript, application/ecmascript, application/x-ecmascript'});
+      expect(stubsSpies.get('addHeaders')).toHaveBeenCalled();
+      expect(headers.all()[0]).toEqual(expect.objectContaining({header: 'Content-type', value: 'application/json'}));
     });
 
     it('should remove headers', function(){
       headers.add([{header: 'header1', value: 'foo'}]);
-      expect(headers.all()).toContain({header: 'header1', value: 'foo'});
+      expect(headers.all()[0]).toEqual(expect.objectContaining({header: 'header1', value: 'foo'}));
       headers.remove('header1');
-      expect(headers.all()).not.toContain({header: 'header1', value: 'foo'});
+      expect(headers.all()[0]).not.toEqual(expect.objectContaining({header: 'header1', value: 'foo'}));
     });
 
     it('should set headers', function(){
-      spyManager.addSpy({title: 'xhr', opts: ['setRequestHeader']});
+      stubsSpies.add([
+        {
+          spy: 'xhr.setRequestHeader'
+        }
+      ]);
+      stubsSpies.make();
 
       headers.add([{header: 'h1', value: 'foo'}, {header: 'h2', value: 'bar'}]);
-      let xhr = spyManager.getSpy('xhr');
+      let xhr = stubsSpies.get('xhr');
       headers.set(xhr);
 
       expect(xhr.setRequestHeader).toHaveBeenCalledTimes(2);
-      let calls = xhr.setRequestHeader.calls.argsFor(0);
+      let calls = xhr.setRequestHeader.mock.calls[0];
       expect(calls[0]).toEqual('h1');
       expect(calls[1]).toEqual('foo');
     });

@@ -1,7 +1,7 @@
 import {clone, isArray, reject} from 'lodash';
 // _.reject = require('lodash/reject');
 
-function addHeaders(headers, token){
+const addHeaders = (headers, token)=>{
   headers = clone(headers);
   if (isArray(token)){
     headers = headers.concat(token);
@@ -9,7 +9,7 @@ function addHeaders(headers, token){
     headers.push(token);
   }
   return headers;
-}
+};
 
 export default function(){
   let headers = [];

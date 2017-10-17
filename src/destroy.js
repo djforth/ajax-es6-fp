@@ -6,20 +6,19 @@ import createPromise from './create_promise';
 import xhrRequest from './set_request';
 
 export default function(url, rails = true){
-  let csrf, data_set, headers, promise, xhr, url_id;
-  csrf = getCSRF();
-  headers = addHeaders();
+  // let csrf, data_set, headers, promise, xhr, url_id;
+  const csrf = getCSRF();
+  const headers = addHeaders();
 
   headers.addCSRF(csrf.token);
-  url_id = add_id(url);
-  data_set = addMethod(csrf, 'delete');
+  const url_id = add_id(url);
+  const data_set = addMethod(csrf, 'delete');
   if (rails){
     headers.addRails();
   }
 
-  promise = createPromise();
-
-  xhr = xhrRequest(promise.resolve, promise.reject);
+  const promise = createPromise();
+  const xhr = xhrRequest(promise.resolve, promise.reject);
 
   return function(id, data){
     let api = (id) ? url_id(id) : url;

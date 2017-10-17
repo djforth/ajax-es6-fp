@@ -1,19 +1,23 @@
- import _ from 'lodash';
-
- import set_progress from '../src/set_progress';
-
-import SpyManager from '@djforth/morse-jasmine-wp/spy_manager';
-const spyManager = SpyManager();
+import _ from 'lodash';
+import set_progress from '../src/set_progress';
+import SpyManager from '@djforth/stubs-spy-manager-jest';
+const stubsSpies = SpyManager(set_progress);
 
 describe('set_progress', function(){
   let prog, spy;
   afterEach(()=>{
-    spyManager.removeAll();
+    stubsSpies.reset();
   });
 
   beforeEach(function(){
-    spyManager.addSpy('progress');
-    spy = spyManager.getSpy('progress');
+    stubsSpies.add([
+      {
+        spy: 'progress'
+      }
+    ]);
+    stubsSpies.make();
+
+    spy = stubsSpies.get('progress');
     prog = set_progress(spy);
   });
 
@@ -22,7 +26,7 @@ describe('set_progress', function(){
 
     expect(spy).toHaveBeenCalled();
 
-    let call = spy.calls.argsFor(0)[0];
+    let call = spy.mock.calls[0][0];
     expect(call.percent).toEqual(50);
     expect(call.loaded).toEqual(100);
     expect(call.total).toEqual(200);
@@ -33,7 +37,7 @@ describe('set_progress', function(){
 
     expect(spy).toHaveBeenCalled();
 
-    let call = spy.calls.argsFor(0)[0];
+    let call = spy.mock.calls[0][0];
     expect(call.percent).toEqual(100);
     expect(call.loaded).toEqual(100);
     expect(call.total).toEqual(200);
